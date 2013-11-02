@@ -1,0 +1,39 @@
+<%= render 'main/menu' %>
+
+  <div class="row">
+      <div class="twelve columns">
+        <h2>Meme collector</h2>
+        <p>Данное представление выводит последние записи со страницы группы <a href="http://vk.com/ria">РИА Новости</a></p>
+        <hr />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="eight columns">
+        <table>
+          <thead>
+            <tr>
+              <th width="100">Дата публикации</th>
+              <th width="350">Сообщения</th>
+              <th>Лайки</th>
+              <th>Репосты</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @array.each do |array| %>
+           <tr>
+              <td><%= Time.at(array.date) %></td>
+              <td><%= array.text %></td>
+              <td><%= array.likes_count %></td>
+              <td><%= array.reposts_count %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+

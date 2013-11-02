@@ -1,0 +1,36 @@
+<%= render 'graph/menu' %>
+<h5 class="subheader"> You can browse, zoom and drag it</h5>
+<script type='text/javascript'>
+
+      
+          var graph = Viva.Graph.graph();
+
+          // Construct the graph
+          <% @names.each do |name| %>
+            graph.addNode('<%= Name.new(name).id %>', {url : '<%= Name.new(name).ph %>'});
+          <% end %>
+
+          <% @links.each do |link| %>
+            graph.addLink('<%= Link.new(link).id1 %>', '<%= Link.new(link).id2 %>');
+          <% end %>
+
+          // Set custom nodes appearance
+          var graphics = Viva.Graph.View.svgGraphics();
+          graphics.node(function(node) {
+                 // The function is called every time renderer needs a ui to display node
+                 return Viva.Graph.svg('image')
+                       .attr('width', 24)
+                       .attr('height', 24)
+                       .link(node.data.url); // node.data holds custom object passed to graph.addNode();
+              })
+              .placeNode(function(nodeUI, pos){
+                  // Shift image to let links go to the center:
+                  nodeUI.attr('x', pos.x - 12).attr('y', pos.y - 12);
+              });
+
+          var renderer = Viva.Graph.View.renderer(graph, 
+              {
+                  graphics : graphics
+              });
+          renderer.run();
+</script>
